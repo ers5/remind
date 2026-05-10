@@ -4,11 +4,12 @@ spring:
 
   ai:
     ollama:
-      base-url: http://localhost:11434
+      base-url: http://168.188.128.36:20251
 
       chat:
         options:
-          model: qwen2.5:3b
+          model: exaone3.5
+
 
       embedding:
         options:
@@ -23,5 +24,5 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
