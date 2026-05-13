@@ -16,7 +16,7 @@ spring:
           model: bge-m3
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/remind
+    url: jdbc:postgresql://localhost:15432/remind
     username: postgres
     password: "0514"
     driver-class-name: org.postgresql.Driver

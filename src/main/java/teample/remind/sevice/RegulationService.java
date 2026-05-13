@@ -27,14 +27,9 @@ public class RegulationService {
         AiStatusJudgeResponse statusResponse;
 
         if (history != null) {
-            statusResponse = new AiStatusJudgeResponse(
-                    dto.appName(),
-                    history.getStatus(),
-                    history.getReason(),
-                    userContextConvertService.extractMinutes(dto.userInput())
-            );
             return new UserResponseDTO(history.getStatus(), history.getReason(), history.getAllowedTime());
-        } else {
+        }
+        else {
             statusResponse = judgeStatus(dto);
         }
 
@@ -131,7 +126,9 @@ public class RegulationService {
         String willPower= userContextConvertService.convertToWillpowerLevel(dto.currentStats().willPowerScore());
         Integer allowedTime=userContextConvertService.extractMinutes(dto.userInput());
         String appName=dto.appName();
-        log.info("LLM 인풋:"+usage,willPower);
+        log.info("LLM 인풋 \n"
+                + "usage: {},willPower: {}, requestAllowedTime:{} ,appName: {}", usage, willPower, allowedTime, appName
+        );
         String prompt = String.format("""
                 너는 사용자의 앱 사용을 분석하여 현재 상태를 판단하는 조절기야.
                 앱 실행량과 사용자의 입력을 바탕으로 기본 위험도를 잡고, 의지력(willPower)에 따라 최종 상태를 결정해줘.
