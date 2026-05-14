@@ -42,7 +42,7 @@ public class UserHistory {
     private Integer requestMinutes;
 
     @Column(columnDefinition = "TEXT")
-    private String reason;
+    private String response;
 
     @Column(name="embedding",nullable = false,columnDefinition = "vector(1024)")
     @Convert(converter = FloatArrayToVectorConverter.class)
@@ -54,13 +54,13 @@ public class UserHistory {
 
     public void incrementCount(){this.useCount++;}
 
-    public UserHistory(String appName,String userInput, String willpowerLevel, String usageLevel, STATUS status, String reason, float[] embedding,Integer requestMinutes,Integer allowedTime) {
+    public UserHistory(String appName,String userInput, String willpowerLevel, String usageLevel, STATUS status, String response, float[] embedding,Integer requestMinutes,Integer allowedTime) {
         this.appName = appName;
         this.userInput = userInput;
         this.willPowerLevel = willpowerLevel;
         this.usageLevel = usageLevel;
         this.status = status;
-        this.reason = reason;
+        this.response = response;
         this.embedding = embedding;
         this.requestMinutes = requestMinutes;
         this.allowedTime = allowedTime;

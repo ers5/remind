@@ -51,7 +51,7 @@ public class HistoryService {
 
     }
     @Transactional
-    public UserHistory saveHistory(UserRequestDTO dto, STATUS status, String reason,Integer allowedTime) {
+    public void saveHistory(UserRequestDTO dto, STATUS status, String response,Integer allowedTime) {
         String willPowerLevel =
                 userContextConvertService.convertToWillpowerLevel(dto.currentStats().willPowerScore());
 
@@ -66,13 +66,13 @@ public class HistoryService {
                 willPowerLevel,
                 usageLevel,
                 status,
-                reason,
+                response,
                 vector,
                 userContextConvertService.extractMinutes(dto.userInput())
                 , allowedTime
         );
 
-        return userHistoryRepository.save(history);
+        userHistoryRepository.save(history);
     }
 
 

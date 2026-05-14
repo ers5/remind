@@ -27,7 +27,7 @@ public class RegulationService {
         AiStatusJudgeResponse statusResponse;
 
         if (history != null) {
-            return new UserResponseDTO(history.getStatus(), history.getReason(), history.getAllowedTime());
+            return new UserResponseDTO(history.getStatus(), history.getResponse(), history.getAllowedTime());
         }
         else {
             statusResponse = judgeStatus(dto);
@@ -40,7 +40,7 @@ public class RegulationService {
                     0
             );
         }
-        UserResponseDTO result = judge(statusResponse);
+        UserResponseDTO result = judge(statusResponse,dto.lockReason());
         if (result.status() != STATUS.FAIL){
             historyService.saveHistory(dto, result.status(), result.text(), result.allowedTime());
             log.info("DB 저장: "+result.status()+result.text());
@@ -48,7 +48,7 @@ public class RegulationService {
         return result;
     }
 
-    public UserResponseDTO judge(AiStatusJudgeResponse response) {
+    public UserResponseDTO judge(AiStatusJudgeResponse response,String lockReason) {
         String appName = response.appName();
         STATUS status = response.status();
         String reason = response.reason();
@@ -84,11 +84,13 @@ public class RegulationService {
 
         String prompt = String.format("""
     너는 사용자의 스마트폰 중독을 예방하는 에이전트야.
+    사용자가 앱을 잠근 이유와, 다시 사용하려는 이유를 비교해서 짧고 자연스러운 메시지를 작성해.
     
     [현재 데이터]
     - 사용 중인 앱: %s
     - 현재 상태: %s
-    - 유저의 상황: %s
+    - 유저가 왜 이 앱을 왜 잠갔나: %s
+    - 유저의 왜 이 앱을 쓰고 싶어 하는지: %s
     - 유저가 요청한 시간: %s
     
     [지침]
@@ -101,7 +103,7 @@ public class RegulationService {
     [출력 형식]
     반드시 다른 설명 없이 아래 JSON 형식으로만 답해.
     {"text": "위의 지침과 예시를 참고한 메시지 내용 1~2줄로 작성해줘", "allowedTime": 지침에 따라 결정된 정수}
-    """, appName, status, reason, allowedTimeText, toneGuide, timeGuide, toneExample);
+    """, appName, status,lockReason, reason, allowedTimeText, toneGuide, timeGuide, toneExample);
 
 
         log.info("LLM에게 던진 프롬프트: \n" + prompt);

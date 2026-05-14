@@ -28,10 +28,6 @@ public class AppController {
         return regulationService.judgeStatus(dto);
     }
 
-    @PostMapping("/testJudge")
-    public UserResponseDTO test2(@RequestBody  AiStatusJudgeResponse response) {
-        return regulationService.judge(response);
-    }
 
     @PostMapping("/testFinal")
     public UserResponseDTO test3(@RequestBody UserRequestDTO dto) {
