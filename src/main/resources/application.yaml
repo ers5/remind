@@ -4,19 +4,18 @@ spring:
 
   ai:
     ollama:
-      base-url: http://168.188.128.36:20251
-
+      base-url: http://127.0.0.1:20251
       chat:
         options:
-          model: exaone3.5
-
+          model: gemma3:12b
+          temperature: 0.1
 
       embedding:
         options:
           model: bge-m3
 
   datasource:
-    url: jdbc:postgresql://localhost:15432/remind
+    url: jdbc:postgresql://127.0.0.1:15432/remind
     username: postgres
     password: "0514"
     driver-class-name: org.postgresql.Driver

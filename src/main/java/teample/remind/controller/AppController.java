@@ -23,10 +23,10 @@ public class AppController {
 //        return ResponseEntity.ok(regulationService.getConsult(dto));
 //    }
 
-    @PostMapping("/test")
-    public AiStatusJudgeResponse test(@RequestBody UserRequestDTO dto) {
-        return regulationService.judgeStatus(dto);
-    }
+//    @PostMapping("/test")
+//    public AiStatusJudgeResponse test(@RequestBody UserRequestDTO dto) {
+//        return regulationService.judgeStatus(dto);
+//    }
 
 
     @PostMapping("/testFinal")
